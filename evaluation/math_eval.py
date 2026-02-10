@@ -2,20 +2,29 @@ import random
 import os
 import argparse
 import time
+import json
 from vllm import LLM, SamplingParams
 from datetime import datetime
 from tqdm import tqdm
-
 import torch
-from transformers import AutoTokenizer, AutoModelForCausalLM
+from transformers import AutoTokenizer
 
 from evaluate import evaluate
-from utils import set_seed, load_jsonl, save_jsonl, construct_prompt
-from parser import *
-from trajectory import *
+from utils import set_seed, load_jsonl, save_jsonl, construct_prompt,PROMPT_TEMPLATES
+from parser import (
+    parse_question,
+    parse_ground_truth,
+    choice_answer_clean,
+    run_execute,
+)
+from trajectory import extract_program
 from data_loader import load_data
 from python_executor import PythonExecutor
 from model_utils import load_hf_lm_and_tokenizer, generate_completions
+
+
+available_prompt_templates = list(PROMPT_TEMPLATES.keys())
+
 
 
 def parse_args():
@@ -24,7 +33,7 @@ def parse_args():
     parser.add_argument("--data_dir", default="./data", type=str)
     parser.add_argument("--model_name_or_path", default="gpt-4", type=str)
     parser.add_argument("--output_dir", default="./output", type=str)
-    parser.add_argument("--prompt_type", default="tool-integrated", type=str)
+    parser.add_argument("--prompt_type", default="tool-integrated", type=str,choices=available_prompt_templates)
     parser.add_argument("--split", default="test", type=str)
     parser.add_argument("--num_test_sample", default=-1, type=int)  # -1 for full data
     parser.add_argument("--seed", default=0, type=int)
@@ -81,7 +90,9 @@ def prepare_data(data_name, args):
     output_dir = args.output_dir
     if not os.path.exists(output_dir):
         output_dir = f"outputs/{output_dir}"
-    out_file = f"{output_dir}/{data_name}/{out_file_prefix}_s{args.start}_e{args.end}.jsonl"
+    out_file = (
+        f"{output_dir}/{data_name}/{out_file_prefix}_s{args.start}_e{args.end}.jsonl"
+    )
     os.makedirs(f"{output_dir}/{data_name}", exist_ok=True)
 
     # load all processed samples
@@ -93,9 +104,7 @@ def prepare_data(data_name, args):
             if f.endswith(".jsonl") and f.startswith(out_file_prefix)
         ]
         for f in processed_files:
-            processed_samples.extend(
-                list(load_jsonl(f"{output_dir}/{data_name}/{f}"))
-            )
+            processed_samples.extend(list(load_jsonl(f"{output_dir}/{data_name}/{f}")))
 
     # dedepulicate
     processed_samples = {sample["idx"]: sample for sample in processed_samples}

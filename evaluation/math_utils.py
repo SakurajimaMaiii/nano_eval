@@ -1,19 +1,8 @@
 import re
-import time
-import os
-import json
-import random
-import string
-from enum import Enum, auto
-from tqdm import tqdm
-from collections import OrderedDict
-import dataclasses
-import pandas as pd
 import timeout_decorator
-import mpmath
 import sympy as sp
+from collections import Counter
 from sympy.parsing.latex import parse_latex
-import sympy as sp
 from sympy import simplify
 from sympy.printing import latex
 from sympy.core.relational import Relational

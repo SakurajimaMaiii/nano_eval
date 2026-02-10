@@ -16,6 +16,15 @@
 </p>
 
 
+Refactor https://github.com/QwenLM/Qwen2.5-Math 
+
+```bash
+cd evaluation
+sh scripts/test.sh
+```
+GSM8K, Qwen3-1.7B, 77% acc
+
+
 Visit our Hugging Face or ModelScope organization (click the links above). Search checkpoints with names starting with `Qwen2.5-Math-`, and you will find all you need! Enjoy!
 
 
