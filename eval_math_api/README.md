@@ -20,7 +20,7 @@ vllm serve deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B \
 
 Generate prediction
 ```bash
-sh run_deepseekr1.sh
+bash run_deepseekr1.sh
 ```
 
 Evaluate
