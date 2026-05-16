@@ -12,7 +12,7 @@ sh scripts/test.sh
 Accuracy is 77% for `Qwen3-1.7B` on GSM8K.
 
 ## Math (OpenAI-SDK)
-TODO
+See `eval_math_api`
 
 ## MMLU
 TODO
