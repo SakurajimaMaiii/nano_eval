@@ -1,5 +1,7 @@
-Code for evaluation
+Minimal code for evaluation
 
+
+## Math (local)
 Refactor from https://github.com/QwenLM/Qwen2.5-Math 
 
 ```bash
@@ -7,10 +9,13 @@ huggingface-cli download --resume-download Qwen/Qwen3-1.7B --local-dir models/Qw
 cd eval_math
 sh scripts/test.sh
 ```
-GSM8K, Qwen3-1.7B, 77% acc
+Accuracy is 77% for `Qwen3-1.7B` on GSM8K.
 
+## Math (OpenAI-SDK)
+TODO
 
-eval mmlu
+## MMLU
+TODO
 ```bash
 cd eval_mmlu
 ```
