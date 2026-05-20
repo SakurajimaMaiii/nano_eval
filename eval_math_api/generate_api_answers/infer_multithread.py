@@ -95,6 +95,9 @@ def main():
         "--top_k", type=int, default=40, help="disable top_k, set -1, do not set 0!"
     )
     args = parser.parse_args()
+    output_dir = os.path.dirname(args.output_file)
+    if output_dir:
+        os.makedirs(output_dir, exist_ok=True)
     with open(args.input_file, "r", encoding="utf-8") as f:
         data = [json.loads(l) for l in f]
 
