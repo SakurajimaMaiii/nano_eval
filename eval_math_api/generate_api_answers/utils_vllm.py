@@ -18,8 +18,8 @@ class ClientError(RuntimeError):
 
 
 def get_content(
-    query, base_url, model_name, temperature=0.6, top_p=0.95, max_tokens=32768, top_k=40
-):
+    query:str, base_url:str, model_name:str, temperature:float=0.6, top_p:float=0.95, max_tokens:int=32768, top_k:int=40
+)->str:
     API_KEY = os.environ.get("OPENAI_API_KEY", "EMPTY")
     API_REQUEST_TIMEOUT = int(os.getenv("OPENAI_API_REQUEST_TIMEOUT", "99999"))
     if IS_OPENAI_V1:
@@ -85,7 +85,8 @@ def get_content(
             "maximum context length" in err_msg
         ):  # or "Expecting value: line 1 column 1 (char 0)" in err_msg:
             logging.warn(f"max length exceeded. Error: {err_msg}")
-            return {"gen": "", "end_reason": "max length exceeded"}
+            # return {"gen": "", "end_reason": "max length exceeded"}
+            return "" 
         time.sleep(1)
         raise ClientError(err_msg) from e
     return result

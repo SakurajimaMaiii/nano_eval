@@ -643,6 +643,7 @@ def parse_ground_truth(example: Dict[str, Any], data_name):
         "aime25",
         "math500box",
         "train",
+        "hmmt25",
     ]:
         gt_cot, gt_ans = None, example["answer"]
     else:

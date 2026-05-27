@@ -12,18 +12,22 @@ from gpqa import compute_scores_gpqa
 support_benchamrks = [
     "math_opensource/aime24",
     "math_opensource/aime25",
+    "math_opensource/hmmt25",
     "livecodebench",
     "ifeval",
     "gpqa",
 ]
 
 
-def get_after_think(text):
-    parts = text.split("\n</think>\n\n", 1)
-    if len(parts) > 1:
-        return parts[1]
+def get_after_think(text:str)->str:
+    if isinstance(text,str):
+        parts = text.split("\n</think>\n\n", 1)
+        if len(parts) > 1:
+            return parts[1]
+        else:
+            return text
     else:
-        return text
+        return ""
 
 
 def main():

@@ -4,7 +4,7 @@ New features:
 
 1. support changing decoding paramters in `infer_multithread.py`
 
-2. add GPQA-D
+2. add GPQA-D/HMMT
 
 3. support get major and pass rates
 
