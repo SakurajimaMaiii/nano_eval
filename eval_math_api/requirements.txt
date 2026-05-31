@@ -1,17 +1,17 @@
-# common
-vllm==0.7.1
-openai>=0.28.1,<=1.65.5
+# common, most versions of openai is OK. vllm please according to your models and hardware.
+vllm
+openai
 packaging
 numpy
 tqdm
-datasets==2.14.6
+datasets
 
 # math_eval
-sympy==1.12
+sympy
 word2number
 Pebble
 timeout-decorator
-latex2sympy2==1.9.1
+latex2sympy2
 
 # livecodebench
 psutil
