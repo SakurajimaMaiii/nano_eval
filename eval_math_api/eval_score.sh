@@ -2,7 +2,7 @@
 set -ex
 
 log_dir="../../logs"
-model_name="deepseek_8b"
+model_name="qwen3_1.7b"
 file_name="hmmt25_bz64"
 task_name="math_opensource/hmmt25"
 
