@@ -58,7 +58,8 @@ def main():
 
     if "math_opensource" in args.task_name:
         acc = compute_scores_math_opensource(data, args.cache_path)
-        print(f"Task: {args.task_name}, Accuracy: {acc}")
+        acc = acc * 100
+        print(f"Task: {args.task_name}, Accuracy: {acc:.2f}")
     elif "livecodebench" in args.task_name:
         acc = compute_scores_livecodebench_v5(data, args.cache_path)
         print(f"Task: {args.task_name}, Pass@1: {acc}")
@@ -67,7 +68,8 @@ def main():
         print(f"Task: {args.task_name}, Strict_prompt_acc: {acc}")
     elif "gpqa" in args.task_name:
         acc = compute_scores_gpqa(data, args.cache_path)
-        print(f"Task: {args.task_name}, acc: {acc}")
+        acc = acc * 100
+        print(f"Task: {args.task_name}, Accuracy: {acc:.2f}")
     else:
         print(f"No evaluation function found for task name: {args.task_name}")
 
