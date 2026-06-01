@@ -28,7 +28,15 @@ def count_completed_samples(output_file):
 
 
 def process_item(
-    item, output_file, base_url, model_name, temperature, top_p, max_tokens, top_k
+    item,
+    output_file,
+    base_url,
+    model_name,
+    temperature,
+    top_p,
+    max_tokens,
+    top_k,
+    reasoning_effort,
 ):
     result = copy.deepcopy(item)
 
@@ -40,6 +48,7 @@ def process_item(
         top_p=top_p,
         max_tokens=max_tokens,
         top_k=top_k,
+        reasoning_effort=reasoning_effort,
     )
 
     if "gen" not in result:
@@ -94,6 +103,12 @@ def main():
     parser.add_argument(
         "--top_k", type=int, default=40, help="disable top_k, set -1, do not set 0!"
     )
+    parser.add_argument(
+        "--reasoning_effort",
+        type=str,
+        default=None,
+        help="set reasoning effort for gpt-oss",
+    )  # low, medium, and high
     args = parser.parse_args()
     output_dir = os.path.dirname(args.output_file)
     if output_dir:
@@ -136,6 +151,7 @@ def main():
                 top_p=args.top_p,
                 max_tokens=args.max_tokens,
                 top_k=args.top_k,
+                reasoning_effort=args.reasoning_effort,
             ): i
             for i, item in enumerate(expanded_data)
         }

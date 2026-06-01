@@ -5,7 +5,9 @@ import openai
 import logging
 from packaging.version import parse as parse_version
 
-IS_OPENAI_V1 = parse_version(openai.__version__) >= parse_version("1.0.0")  # current version: 2.36.0
+IS_OPENAI_V1 = parse_version(openai.__version__) >= parse_version(
+    "1.0.0"
+)
 
 if IS_OPENAI_V1:
     from openai import APIError, APIConnectionError, RateLimitError
@@ -18,8 +20,15 @@ class ClientError(RuntimeError):
 
 
 def get_content(
-    query:str, base_url:str, model_name:str, temperature:float=0.6, top_p:float=0.95, max_tokens:int=32768, top_k:int=40
-)->str:
+    query: str,
+    base_url: str,
+    model_name: str,
+    temperature: float = 0.6,
+    top_p: float = 0.95,
+    max_tokens: int = 32768,
+    top_k: int = 40,
+    reasoning_effort: str = None,
+) -> str:
     API_KEY = os.environ.get("OPENAI_API_KEY", "EMPTY")
     API_REQUEST_TIMEOUT = int(os.getenv("OPENAI_API_REQUEST_TIMEOUT", "99999"))
     if IS_OPENAI_V1:
@@ -40,6 +49,9 @@ def get_content(
         top_p=top_p,
         max_tokens=max_tokens,
     )
+    if reasoning_effort is not None:
+        call_args["reasoning_effort"] = reasoning_effort
+
     if IS_OPENAI_V1:
         call_args["extra_body"] = {}
         extra_args_dict = call_args["extra_body"]
@@ -86,7 +98,7 @@ def get_content(
         ):  # or "Expecting value: line 1 column 1 (char 0)" in err_msg:
             logging.warn(f"max length exceeded. Error: {err_msg}")
             # return {"gen": "", "end_reason": "max length exceeded"}
-            return "" 
+            return ""
         time.sleep(1)
         raise ClientError(err_msg) from e
     return result
