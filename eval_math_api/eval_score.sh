@@ -2,7 +2,7 @@
 set -ex
 
 log_dir="../../logs"
-model_name="qwen3_1.7b"
+model_name="Qwen3-30B-A3B"
 file_name="hmmt25_bz64"
 task_name="math_opensource/hmmt25"
 
@@ -12,13 +12,14 @@ result_path="${log_dir}/eval_res/${model_name}/${file_name}_res_result.txt"
 
 mkdir -p "${log_dir}/eval_res/${model_name}"
 
-python eval/eval.py \
-  --input_path "${input_path}" \
-  --cache_path "${cache_path}" \
-  --task_name "${task_name}" \
-  > "${result_path}"
+{
+    python -u eval/eval.py \
+      --input_path "${input_path}" \
+      --cache_path "${cache_path}" \
+      --task_name "${task_name}"
 
-python eval/eval_major_pass.py \
-  --file_path "${cache_path}"
+    python -u eval/eval_major_pass.py \
+      --file_path "${cache_path}"
 
-echo "eval finish"
+    echo "eval finish"
+} 2>&1 | tee "${result_path}"

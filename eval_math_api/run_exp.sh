@@ -26,13 +26,13 @@ GEN_ARGS=(
 
 MODEL_ARGS=(
   --base_url "http://127.0.0.1:8000/v1"
-  --model_name "Qwen3-1.7B"
+  --model_name "Qwen/Qwen3-30B-A3B"
 )
 
 echo "=====>AIME24"
 IO_ARGS=(
   --input_file "./data/aime24.jsonl"
-  --output_file "../../logs/output/qwen3_1.7b/aime24_bz64.jsonl"
+  --output_file "../../logs/output/Qwen3-30B-A3B/aime24_bz64.jsonl"
 )
 python ./generate_api_answers/infer_multithread.py \
   "${IO_ARGS[@]}" \
@@ -42,7 +42,7 @@ python ./generate_api_answers/infer_multithread.py \
 echo "=====>AIME25"
 IO_ARGS=(
   --input_file "./data/aime25.jsonl"
-  --output_file "../../logs/output/qwen3_1.7b/aime25_bz64.jsonl"
+  --output_file "../../logs/output/Qwen3-30B-A3B/aime25_bz64.jsonl"
 )
 python ./generate_api_answers/infer_multithread.py \
   "${IO_ARGS[@]}" \
@@ -53,7 +53,7 @@ python ./generate_api_answers/infer_multithread.py \
 echo "=====>GPQA"
 IO_ARGS=(
   --input_file "./data/gpqa_diamond.jsonl"
-  --output_file "../../logs/output/qwen3_1.7b/gpqa_diamond_bz64.jsonl"
+  --output_file "../../logs/output/Qwen3-30B-A3B/gpqa_diamond_bz64.jsonl"
 )
 python ./generate_api_answers/infer_multithread.py \
   "${IO_ARGS[@]}" \
@@ -64,7 +64,7 @@ python ./generate_api_answers/infer_multithread.py \
 echo "=====>HMMT"
 IO_ARGS=(
   --input_file "./data/hmmt25.jsonl"
-  --output_file "../../logs/output/qwen3_1.7b/hmmt25_bz64.jsonl"
+  --output_file "../../logs/output/Qwen3-30B-A3B/hmmt25_bz64.jsonl"
 )
 
 python ./generate_api_answers/infer_multithread.py \
